@@ -22,7 +22,7 @@ PHONE_NUMBER_ID = "1095000627035484"
 def chat_with_ai(user_message):
 
     response = client.chat.completions.create(
-        model="gpt-4.1-mini",
+        model="gpt-4o-mini",
         messages=[
             {
                 "role": "system",
