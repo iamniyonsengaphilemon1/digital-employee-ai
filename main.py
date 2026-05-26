@@ -13,7 +13,7 @@ client = OpenAI(
 # WhatsApp settings
 VERIFY_TOKEN = "mytoken123"
 
-ACCESS_TOKEN = "EAAM3YSuSvTgBRqkHE5I5ZCxPmboA1XCNWZC01Q2OWQlEOjvTNQSQXZB45SZAVVbTzUlKFm3wMGyQlzud2MMwZAiMtWFdxThtL9jOLZBjJKETn5HsEyuNL2loynhcnY2EGF3ifxIZBmml4lyZCB2ZAWcwQuJfdkWEwJxV9kDrRCs4CzgwRGDuIQ2OczItgxNmim39TyludBzPNT8wL2XbVtxVnwu5321jvPRtZAuOfd1FXZCb95RIMe5PJfbmkgTnPpNPRRNOq4LssMeE66bPMhreEhqqwZDZD"
+ACCESS_TOKEN = "EAAM3YSuSvTgBRjlrgxO5yFKZCRO8ZBfmZBL8Iu6lDiUs2ZCdASWlGKSdMSD0Jx9e1GQchom502JUNTTrWCCFdDO4ultppFzPHXYxR1ORPz523DYubeXsZAFjzhqfWHGDlroXYjm4DlIq8qkBZA3AgTXwQo8J0Rbi1W4tItDm6ikKJdzU2PZBalj6itSZADm97Qi9L851q7htL0a6NZCXMR2Vr59RqZBgAzo5FDCNVBqzS8WNUyfGBKIPfTn4T40YyEPylZBBhiZC5CQ11L39RAS23QMB"
 
 PHONE_NUMBER_ID = "1095000627035484"
 
@@ -21,12 +21,13 @@ PHONE_NUMBER_ID = "1095000627035484"
 # AI reply function
 def chat_with_ai(user_message):
 
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {
-                "role": "system",
-                "content": """
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {
+                    "role": "system",
+                    "content": """
 You are Digital Employee AI.
 
 You work for Kigali Phone Services in Kigali.
@@ -41,15 +42,19 @@ Your job:
 - Encourage customers to visit the shop
 - Sound friendly and human
 """
-            },
-            {
-                "role": "user",
-                "content": user_message
-            }
-        ]
-    )
+                },
+                {
+                    "role": "user",
+                    "content": user_message
+                }
+            ]
+        )
 
-    return response.choices[0].message.content
+        return response.choices[0].message.content
+
+    except Exception as e:
+        print("OPENAI ERROR:", e)
+        return "AI temporarily unavailable."
 
 
 # WEBHOOK VERIFICATION
