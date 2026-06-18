@@ -66,6 +66,29 @@ Rules:
         return "AI temporarily unavailable."
 
 
+# HOME ROUTE
+@app.route("/", methods=["GET"])
+def home():
+    return {
+        "message": "Digital Employee AI is running"
+    }, 200
+
+
+# FLUTTER CHAT ROUTE
+@app.route("/chat", methods=["POST"])
+def chat():
+
+    data = request.get_json()
+
+    user_message = data.get("message", "")
+
+    ai_reply = chat_with_ai(user_message)
+
+    return {
+        "reply": ai_reply
+    }, 200
+
+
 # WEBHOOK VERIFICATION
 @app.route("/webhook", methods=["GET"])
 def verify():
@@ -93,7 +116,6 @@ def webhook():
 
         user_number = message["from"]
 
-        # CHECK IF MESSAGE IS TEXT
         if "text" in message:
 
             user_text = message["text"]["body"]
@@ -139,4 +161,4 @@ def send_whatsapp_message(to, message):
 
 # START SERVER
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5050, debug=True)
+    app.run(host="0.0.0.0", port=5050, debug=True)%                             
